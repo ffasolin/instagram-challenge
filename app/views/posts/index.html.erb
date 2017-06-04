@@ -1,7 +1,9 @@
 <h2>Posts</h2>
-<% @posts.each do |post| %>
+<% @posts.order('created_at DESC').each do |post| %>
   <p>
     <%= post.message %>
     <%= image_tag post.image_url.to_s %>
   </p>
 <% end %>
+
+<%= link_to 'New Post', new_user_post_path(@user) %>

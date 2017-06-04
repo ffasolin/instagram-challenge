@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < Clearance::ApplicationController
   def new
     @user = User.new
   end
@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = user_from_params
     @user.save
     if @user.save
       redirect_to @user
@@ -18,7 +18,18 @@ class UsersController < ApplicationController
   end
 
   private
-  def user_params
-    params.require(:user).permit(:name, :username, :email, :password)
+  def user_from_params
+    user_params = params[:user] || Hash.new
+    name = user_params.delete(:name)
+    username = user_params.delete(:username)
+    email = user_params.delete(:email)
+    password = user_params.delete(:password)
+
+    Clearance.configuration.user_model.new(user_params).tap do |user|
+      user.name = name
+      user.username = username
+      user.email = email
+      user.password = password
+    end
   end
 end

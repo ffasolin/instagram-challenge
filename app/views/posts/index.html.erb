@@ -2,5 +2,6 @@
 <% @posts.each do |post| %>
   <p>
     <%= post.message %>
+    <%= image_tag post.image_url.to_s %>
   </p>
 <% end %>

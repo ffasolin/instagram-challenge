@@ -13,3 +13,12 @@
 # RSpec.describe UserHelper, type: :helper do
 #   pending "add some examples to (or delete) #{__FILE__}"
 # end
+
+def sign_up
+  visit '/'
+  fill_in 'user[name]', with: 'User'
+  fill_in 'user[username]', with: 'username'
+  fill_in 'user[email]', with: 'user@user.com'
+  fill_in 'user[password]', with: '12345678'
+  click_button 'Sign up'
+end
